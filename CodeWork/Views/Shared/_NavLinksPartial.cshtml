@@ -1,0 +1,87 @@
+﻿<!-- Not Signed In-->
+@if (Session["user"] == null && Session["company"] == null)
+{
+    //IF USER IS NOT SIGNED IN
+    //THEN DISPLAY LOGIN OR REGISTER
+    //OPTIONS IN NAVBAR
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            @Html.ActionLink("Register", "Index", "Register", new { }, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Login", "Index", "Login", new { }, new { @class = "nav-link" })
+        </li>
+    </ul>
+
+    return;
+}
+
+@if (Session["user"] != null)
+{
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            @Html.ActionLink("Home", "Index", "User", null, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Profile", "Profile", "User", null, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Dashboard", "Dashboard", "User", null, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Jobs", "Projects", "User", null, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Projects", "Projects", "User", null, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Messages", "Messages", "User", null, new { @class = "nav-link" })
+        </li>
+    </ul>
+
+
+    var user = (CodeWork.Models.SessionData)Session["user"];
+    <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @user.Username
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                @Html.ActionLink("View Profile",
+               actionName: "Profile", controllerName:
+               "User",
+               routeValues: null,
+               htmlAttributes: new { @class = "dropdown-item" })
+                @Html.ActionLink("View Dashboard",
+               actionName: "Dashboard", controllerName:
+               "User",
+               routeValues: null,
+               htmlAttributes: new { @class = "dropdown-item" })
+                <hr />
+                @Html.ActionLink("Account Settings",
+               actionName: "Settings", controllerName:
+               "Account",
+               routeValues: null,
+               htmlAttributes: new { @class = "dropdown-item" })
+                @Html.ActionLink("Change Password",
+               actionName: "ChangePassword", controllerName:
+               "Account",
+               routeValues: null,
+               htmlAttributes: new { @class = "dropdown-item" })
+                @Html.ActionLink("Log out",
+               actionName: "Logout", controllerName:
+               "Login",
+               routeValues: null,
+               htmlAttributes: new { @class = "dropdown-item" })
+            </div>
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Post Project", "New", "Project", null, new { @class = "nav-link btn btn-primary"})
+        </li>
+    </ul>
+}
+
+
+
+<!-- Signed In as User -->

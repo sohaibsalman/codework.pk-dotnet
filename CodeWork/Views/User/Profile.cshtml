@@ -1,0 +1,303 @@
+﻿@model CodeWork.Models.User
+@{
+    ViewBag.Title = "| Profile";
+}
+
+
+<div class="user_profile">
+    <div class="row">
+        <!--LEFT SIDE-->
+        <div class="col-8">
+            <!--Personal Info-->
+            <div class="row _shadow">
+                <div class="col-12">
+                    <div class="profile personal-info" id="personal">
+                        <div class="heading">
+                            <div class="row">
+                                <div class="col-11">
+                                    <h5>Personal Information</h5>
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-primary" id="js-edit">Edit</button>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                        <div class="content">
+                            <div class="row">
+                                <!--Profile Picture-->
+                                <div class="profile-pic col-md-4">
+                                    @{
+                                        string profilePic = "";
+                                        if (Model.Profile.ProfilePicture == null)
+                                        {
+                                            profilePic = "/Img/profile/default.png";
+                                        }
+                                        else
+                                        {
+                                            profilePic = Model.Profile.ProfilePicture;
+                                        }
+                                    }
+                                    <img src="@profilePic" alt="user-dp" />
+                                </div>
+                                <!--INFO-->
+                                <div class="col-md-8">
+                                    <h3>@Model.Profile.Name</h3>
+                                    <div class="contact">
+                                        <p> <strong>Username: </strong> @Model.Username</p>
+                                        <p> <strong>Email: </strong> @Model.Email</p>
+                                        <p> <strong>Contact: </strong> @Model.Profile.ContactNumber</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.Partial("_EditPersonal")
+
+                    </div>
+                </div>
+            </div>
+
+            <!--Summary-->
+            <div class="row _shadow">
+                <div class="col-12">
+                    <div class="profile" id="summary">
+                        <div class="heading">
+                            <div class="row">
+                                <div class="col-11">
+                                    <h5>Summary</h5>
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-primary" id="js-edit">Edit</button>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+
+                        <div class="content">
+                            @if (Model.Profile.Summary == null)
+                            {
+                                <div class="alert alert-primary">
+                                    No Summary added yet!
+                                </div>
+                            }
+                            else
+                            {
+                                <p> @Model.Profile.Summary </p>
+                            }
+                        </div>
+
+                        <div class="edit-content">
+                            <div class="form-group">
+                                @Html.TextAreaFor(m => m.Profile.Summary, new { @class = "form-control", placeholder = "Enter your Professional Summary... (max 1024 characters)"})
+                            </div>
+
+                            <div class="form_buttons">
+                                <button class="btn btn-success">Save Changes</button>
+                                <button class="btn btn-danger" id="js-cancel">Cancel</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--Education-->
+            <div class="row _shadow">
+                <div class="col-12">
+                    <div class="profile" id="education">
+                        <div class="heading">
+                            <div class="row">
+                                <div class="col-11">
+                                    <h5>Education</h5>
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-primary" id="js-edit">Add</button>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+
+                        <div class="content">
+                            @if (Model.Profile.Education == null)
+                            {
+                                <div class="alert alert-primary">
+                                    No Education info added yet!
+                                </div>
+                            }
+                            else
+                            {
+                                <p> @Model.Profile.Education </p>
+                            }
+                        </div>
+
+                        @Html.Partial("_EditEducation", new CodeWork.Models.UserEducation())
+
+                    </div>
+                </div>
+            </div>
+
+            <!--Experience-->
+            <div class="row _shadow">
+                <div class="col-12">
+                    <div class="profile" id="experience">
+                        <div class="heading">
+                            <div class="row">
+                                <div class="col-11">
+                                    <h5>Job Experience</h5>
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-primary" id="js-edit">Edit</button>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+
+                        <div class="content">
+                            @if (Model.Profile.Experience == null)
+                            {
+                                <div class="alert alert-primary">
+                                    No Job info added yet!
+                                </div>
+                            }
+                            else
+                            {
+                                <p> @Model.Profile.Experience </p>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--Skills-->
+            <div class="row _shadow">
+                <div class="col-12">
+                    <div class="profile" id="skills">
+                        <div class="heading">
+                            <div class="row">
+                                <div class="col-11">
+                                    <h5>Technical Skills</h5>
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-primary" id="js-edit">Edit</button>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+
+                        <div class="content">
+                            @if (Model.Profile.Skills == null)
+                            {
+                                <div class="alert alert-primary">
+                                    No skill added yet!
+                                </div>
+                            }
+                            else
+                            {
+                                <p> @Model.Profile.Skills </p>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>  <!---End of Left Side-->
+        <!--RIGHT SIDE-->
+        <div class="col-4">
+            <div class="profile_completion">
+                <div class="_shadow right-fixed ">
+                    <!--Heading-->
+                    <div class="heading">
+                        <h4>Profile Completion</h4>
+                        <hr />
+                    </div>
+
+                    <!--Percentage-->
+                    <div class="completion-percentage">
+                        @{
+                            int percentage = CodeWork.Models.Helpers.HelperMethods.GetProfileCompletionPercent(Model);
+                            string headingColor = "text-succes";
+
+                            if (percentage < 50)
+                            {
+                                headingColor = "text-danger";
+                            }
+                            else if (percentage < 85)
+                            {
+                                headingColor = "text-warning";
+                            }
+                        }
+
+                        <h1 class="@headingColor">@percentage%  </h1>
+                    </div>
+
+                    <!--List of Profile info-->
+                    <div class="profile_list">
+                        @{
+
+                            List<string> incomplete = CodeWork.Models.Helpers.HelperMethods.GetListOfIncompleteInfo(Model);
+                            List<string> complete = CodeWork.Models.Helpers.HelperMethods.GetListOfCompleteInfo(Model);
+
+
+                            <ul>
+                                @foreach (var item in complete)
+                                {
+                                    //Display list of Incomplete info
+                                    <li> <span class="text-success">&#10003</span> @item </li>
+                                }
+                                @foreach (var item in incomplete)
+                                {
+                                    //Display list of Incomplete info
+                                    <li> <span class="text-danger">&#10007</span> @item </li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                    <!--Message-->
+                    <div class="message alert alert-warning">
+                        Complete your profile and update your profile regularly to get hired quickly!.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".profile").on("click", "#js-edit", function () {
+
+                var button = $(this);
+
+                var parentId = "#" + button.parents(".profile").attr("id")
+
+                //Hide the content
+                $(parentId + " .content").hide();
+                //Hide Edit button
+                button.hide();
+
+                //Show edit content
+                $(parentId + " .edit-content").show();
+            });
+
+            $(".profile").on("click", "#js-cancel", function () {
+
+                var button = $(this);
+
+                var parentId = "#" + button.parents(".profile").attr("id");
+
+                //Display original content
+                $(parentId + " .content").show();
+                $(parentId + " #js-edit").show();
+
+                //Hide edit content
+                $(parentId + " .edit-content").hide();
+
+            });
+        });
+    </script>
+}

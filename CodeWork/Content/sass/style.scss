@@ -1,0 +1,95 @@
+﻿$color-blue-1: #192a56;
+$color-blue-2: #273c75;
+
+//Navbar Color
+.bg-green 
+{
+    background-color: $color-blue-1;
+}
+
+body {
+    background: #f6f6f6;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 3px 0;
+}
+
+._shadow 
+{
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(black, .2);
+    margin-top: 20px;
+}
+
+//User Profile
+.user_profile 
+{
+    .personal-info 
+    {
+        .contact 
+        {
+            margin-top: 10px;
+        }
+
+        .profile-pic 
+        {
+            img 
+            {
+                display: block;
+                margin: 0 auto;
+                width: 140px;
+            }
+        }
+    }
+
+    .profile_completion 
+    {
+        position: relative;
+
+        .right-fixed 
+        {
+            position: fixed;
+            width: 380px;
+
+            .completion-percentage 
+            {
+                h1 
+                {
+                    text-align: center;
+                    font-size: 70px;
+                    color: $color-blue-1;
+                    margin-bottom: 20px;
+                }
+            }
+
+            .profile_list {
+                ul 
+                {
+                    list-style: none;
+                    li 
+                    {
+                        margin: 5px 0;
+                        span 
+                        {
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    .edit-content {
+        display: none;
+    }
+}
+
+
+.form_buttons
+{
+    float: right;
+}

@@ -1,0 +1,15 @@
+﻿@model CodeWork.Models.UserEducation
+    <div class="edit-content">
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DegreeTitle)
+            @Html.TextBoxFor(m => m.DegreeTitle, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DegreeTitle, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.InstitutionName)
+            @Html.TextBoxFor(m => m.InstitutionName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InstitutionName, "", new { @class = "text-danger" })
+        </div>
+    </div>

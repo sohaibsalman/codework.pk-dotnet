@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "| Register";
+}
+
+<h2>Register</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Register as a User</h4>
+            <p>
+                Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+            </p>
+            @Html.ActionLink("Register User", "User", new { }, new { @class = "btn btn-primary" })
+        </div>
+
+        <div class="col-md-6">
+            <h4>Register as a Company</h4>
+            <p>
+                Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+            </p>
+            @Html.ActionLink("Register Company", "Company", new { }, new { @class = "btn btn-secondary" })
+        </div>
+    </div>

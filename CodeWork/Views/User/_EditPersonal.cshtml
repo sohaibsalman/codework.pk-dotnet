@@ -1,0 +1,59 @@
+﻿@model CodeWork.Models.User
+
+<div class="edit-content">
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email Address" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Profile.Name)
+        @Html.TextBoxFor(m => m.Profile.Name, new { @class = "form-control", placeholder = "Full Name" })
+        @Html.ValidationMessageFor(m => m.Profile.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Profile.DateOfBirth)
+        @Html.TextBoxFor(m => m.Profile.DateOfBirth, new { @class = "form-control", @type = "date" })
+        @Html.ValidationMessageFor(m => m.Profile.DateOfBirth, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Profile.ContactNumber)
+        @Html.TextBoxFor(m => m.Profile.ContactNumber, new { @class = "form-control", placeholder = "Contact Number" })
+        @Html.ValidationMessageFor(m => m.Profile.ContactNumber, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Profile.Gender) <br />
+        <label>
+            @Html.RadioButtonFor(m => m.Profile.Gender, "Male") Male
+        </label>
+        <label>
+            @Html.RadioButtonFor(m => m.Profile.Gender, "Female") Female
+        </label>
+        @Html.ValidationMessageFor(m => m.Profile.Gender, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Profile.Location)
+        @Html.TextBoxFor(m => m.Profile.Location, new { @class = "form-control", placeholder = "City Location" })
+        @Html.ValidationMessageFor(m => m.Profile.Location, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Profile.Address)
+        @Html.TextBoxFor(m => m.Profile.Address, new { @class = "form-control", placeholder = "Home Address" })
+        @Html.ValidationMessageFor(m => m.Profile.Address, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form_buttons">
+        <div class="form-group">
+            <input type="submit" value="Save Changes" class="btn btn-success" />
+            <button class="btn btn-danger" id="js-cancel">Cancel</button>
+        </div>
+    </div>
+
+</div>
