@@ -1,7 +1,8 @@
-﻿@model CodeWork.Models.User
+﻿@model CodeWork.ViewModels.ProfileViewModel
 @{
     ViewBag.Title = "| Profile";
 }
+
 
 
 <div class="user_profile">
@@ -18,7 +19,7 @@
                                     <h5>Personal Information</h5>
                                 </div>
                                 <div class="col-1">
-                                    <button class="btn btn-primary" id="js-edit">Edit</button>
+                                    <div class="btn btn-primary" id="js-edit">Edit</div>
                                 </div>
                             </div>
                             <hr />
@@ -29,29 +30,32 @@
                                 <div class="profile-pic col-md-4">
                                     @{
                                         string profilePic = "";
-                                        if (Model.Profile.ProfilePicture == null)
+                                        if (String.IsNullOrEmpty(Model.User.Profile.ProfilePicture))
                                         {
                                             profilePic = "/Img/profile/default.png";
                                         }
                                         else
                                         {
-                                            profilePic = Model.Profile.ProfilePicture;
+                                            profilePic = Model.User.Profile.ProfilePicture;
                                         }
                                     }
                                     <img src="@profilePic" alt="user-dp" />
                                 </div>
                                 <!--INFO-->
                                 <div class="col-md-8">
-                                    <h3>@Model.Profile.Name</h3>
+                                    <h3>@Model.User.Profile.Name</h3>
                                     <div class="contact">
-                                        <p> <strong>Username: </strong> @Model.Username</p>
-                                        <p> <strong>Email: </strong> @Model.Email</p>
-                                        <p> <strong>Contact: </strong> @Model.Profile.ContactNumber</p>
+                                        <p> <strong>Username: </strong> @Model.User.Username</p>
+                                        <p> <strong>Email: </strong> @Model.User.Email</p>
+                                        <p> <strong>Contact: </strong> @Model.User.Profile.ContactNumber</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @Html.Partial("_EditPersonal")
+
+                        @Html.Partial("_EditPersonal", 
+                                    new CodeWork.ViewModels.PesronalInfoViewModel 
+                                    { Email = Model.User.Email, Profile = Model.User.Profile})
 
                     </div>
                 </div>
@@ -67,14 +71,14 @@
                                     <h5>Summary</h5>
                                 </div>
                                 <div class="col-1">
-                                    <button class="btn btn-primary" id="js-edit">Edit</button>
+                                    <div class="btn btn-primary" id="js-edit">Edit</div>
                                 </div>
                             </div>
                             <hr />
                         </div>
 
                         <div class="content">
-                            @if (Model.Profile.Summary == null)
+                            @if (Model.User.Profile.Summary == null)
                             {
                                 <div class="alert alert-primary">
                                     No Summary added yet!
@@ -82,18 +86,18 @@
                             }
                             else
                             {
-                                <p> @Model.Profile.Summary </p>
+                                <p> @Model.User.Profile.Summary </p>
                             }
                         </div>
 
                         <div class="edit-content">
                             <div class="form-group">
-                                @Html.TextAreaFor(m => m.Profile.Summary, new { @class = "form-control", placeholder = "Enter your Professional Summary... (max 1024 characters)"})
+                                @Html.TextAreaFor(m => m.User.Profile.Summary, new { @class = "form-control", placeholder = "Enter your Professional Summary... (max 1024 characters)" })
                             </div>
 
                             <div class="form_buttons">
                                 <button class="btn btn-success">Save Changes</button>
-                                <button class="btn btn-danger" id="js-cancel">Cancel</button>
+                                <div class="btn btn-danger" id="js-cancel">Cancel</div>
                             </div>
 
                         </div>
@@ -112,14 +116,14 @@
                                     <h5>Education</h5>
                                 </div>
                                 <div class="col-1">
-                                    <button class="btn btn-primary" id="js-edit">Add</button>
+                                    <div class="btn btn-primary" id="js-edit">Add</div>
                                 </div>
                             </div>
                             <hr />
                         </div>
 
                         <div class="content">
-                            @if (Model.Profile.Education == null)
+                            @if (Model.User.Profile.Education == null)
                             {
                                 <div class="alert alert-primary">
                                     No Education info added yet!
@@ -127,11 +131,11 @@
                             }
                             else
                             {
-                                <p> @Model.Profile.Education </p>
+                                <p> @Model.User.Profile.Education </p>
                             }
                         </div>
 
-                        @Html.Partial("_EditEducation", new CodeWork.Models.UserEducation())
+                        @Html.Partial("_EditEducation", new CodeWork.ViewModels.EducationInfoViewModel { Education = new CodeWork.Models.UserEducation(), DegreeTitles = Model.DegreeTitles })
 
                     </div>
                 </div>
@@ -147,14 +151,14 @@
                                     <h5>Job Experience</h5>
                                 </div>
                                 <div class="col-1">
-                                    <button class="btn btn-primary" id="js-edit">Edit</button>
+                                    <div class="btn btn-primary" id="js-edit">Add</div>
                                 </div>
                             </div>
                             <hr />
                         </div>
 
                         <div class="content">
-                            @if (Model.Profile.Experience == null)
+                            @if (Model.User.Profile.Experience == null)
                             {
                                 <div class="alert alert-primary">
                                     No Job info added yet!
@@ -162,9 +166,11 @@
                             }
                             else
                             {
-                                <p> @Model.Profile.Experience </p>
+                                <p> @Model.User.Profile.Experience </p>
                             }
                         </div>
+
+                        @Html.Partial("_EditJob", new CodeWork.ViewModels.JobInfoViewModel { Experience = new CodeWork.Models.UserJobExperience(), Industries = Model.Industries })
 
                     </div>
                 </div>
@@ -180,14 +186,14 @@
                                     <h5>Technical Skills</h5>
                                 </div>
                                 <div class="col-1">
-                                    <button class="btn btn-primary" id="js-edit">Edit</button>
+                                    <div class="btn btn-primary" id="js-edit">Add</div>
                                 </div>
                             </div>
                             <hr />
                         </div>
 
                         <div class="content">
-                            @if (Model.Profile.Skills == null)
+                            @if (Model.User.Profile.Skills == null)
                             {
                                 <div class="alert alert-primary">
                                     No skill added yet!
@@ -195,15 +201,18 @@
                             }
                             else
                             {
-                                <p> @Model.Profile.Skills </p>
+                                <p> @Model.User.Profile.Skills </p>
                             }
                         </div>
+
+                        @Html.Partial("_EditSkills", new CodeWork.ViewModels.SkillsInfoViewModel { Skill = new CodeWork.Models.UserSkills(), SkillLevels = Model.SkillLevels })
 
                     </div>
                 </div>
             </div>
 
-        </div>  <!---End of Left Side-->
+
+        </div> <!---End of Left Side-->
         <!--RIGHT SIDE-->
         <div class="col-4">
             <div class="profile_completion">
@@ -217,7 +226,7 @@
                     <!--Percentage-->
                     <div class="completion-percentage">
                         @{
-                            int percentage = CodeWork.Models.Helpers.HelperMethods.GetProfileCompletionPercent(Model);
+                            int percentage = CodeWork.Models.Helpers.HelperMethods.GetProfileCompletionPercent(Model.User);
                             string headingColor = "text-succes";
 
                             if (percentage < 50)
@@ -237,8 +246,8 @@
                     <div class="profile_list">
                         @{
 
-                            List<string> incomplete = CodeWork.Models.Helpers.HelperMethods.GetListOfIncompleteInfo(Model);
-                            List<string> complete = CodeWork.Models.Helpers.HelperMethods.GetListOfCompleteInfo(Model);
+                            List<string> incomplete = CodeWork.Models.Helpers.HelperMethods.GetListOfIncompleteInfo(Model.User);
+                            List<string> complete = CodeWork.Models.Helpers.HelperMethods.GetListOfCompleteInfo(Model.User);
 
 
                             <ul>
@@ -257,7 +266,7 @@
                     </div>
                     <!--Message-->
                     <div class="message alert alert-warning">
-                        Complete your profile and update your profile regularly to get hired quickly!.
+                        Complete your profile and update your profile regularly to get hired quickly!
                     </div>
                 </div>
             </div>
@@ -267,6 +276,9 @@
 
 
 @section scripts {
+
+    @Scripts.Render("~/bundles/jqueryval");
+
     <script>
         $(document).ready(function () {
             $(".profile").on("click", "#js-edit", function () {

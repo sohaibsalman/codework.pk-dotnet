@@ -103,3 +103,8 @@ D:\Development\C#\CodeWork\CodeWork\bin\System.Web.Http.WebHost.xml
 D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.AddGenderAndBirthDateToUserProfile.resources
 D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.AddAddressCoulumnInUserProfileTable.resources
 D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.PopulateDegreeTitleTable.resources
+D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.AddDataAnnotationsToUserEducation.resources
+D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.AddDataAnnotationToJobExperience.resources
+D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.PopulateIndustriesTable.resources
+D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.PopulateSkillsLevelTable.resources
+D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.AddDataAnnotationsToSkills.resources

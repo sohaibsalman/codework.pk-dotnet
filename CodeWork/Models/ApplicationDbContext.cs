@@ -11,6 +11,10 @@ namespace CodeWork.Models
         public DbSet<User> User { get; set; }
         public DbSet<UserProfile> UserProfile { get; set; }
 
+        public DbSet<DegreeTitle> DegreeTitles { get; set; }
+        public DbSet<Industry> Industries { get; set; }
+        public DbSet<SkillLevel> SkillLevels { get; set; }
+
         public ApplicationDbContext(): base("CodeWork")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, CodeWork.Migrations.Configuration>());

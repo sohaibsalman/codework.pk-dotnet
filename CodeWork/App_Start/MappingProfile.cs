@@ -16,6 +16,12 @@ namespace CodeWork.App_Start
             Mapper.CreateMap<UserLoginDto, User>();
 
             Mapper.CreateMap<User, SessionData>();
+
+            Mapper.CreateMap<User, UserDto>();
+            Mapper.CreateMap<UserDto, User>();
+
+            Mapper.CreateMap<UserProfile, UserProfileDto>();
+            Mapper.CreateMap<UserProfileDto, UserProfile>();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using CodeWork.Models;
+﻿using AutoMapper;
+using CodeWork.Models;
+using CodeWork.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -41,36 +43,92 @@ namespace CodeWork.Controllers
             //Create Db variable
             ApplicationDbContext _context = new ApplicationDbContext();
 
-            User userData = _context.User.Include(p => p.Profile).Single(u => u.Id == currentUser.Id);
+            var viewModel = GetProfileViewModel(_context, currentUser.Id);
 
-            return View(userData);
+            return View(viewModel);
         }
 
 
 
+        //[HttpPost]
+        //[ActionName("Profile")]
+        //public ActionResult SavePersonalData(UserProfile profile)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View("PersonalInfoForm");
+
+        //    if (Session["user"] == null)
+        //        return RedirectToAction("Login", "User");
+
+        //    SessionData sessionData = (SessionData)Session["user"];
+
+        //    //Create DB variable
+        //    var _context = new ApplicationDbContext();
+
+        //    var userInDb = _context.User.Include(p => p.Profile).Single(u => u.Id == sessionData.Id);
+
+        //    userInDb.Profile = profile;
+
+        //    //Add User Profile data to DB
+        //    _context.SaveChanges();
+
+        //    return View();
+        //}
+
+
         [HttpPost]
-        [ActionName("Profile")]
-        public ActionResult SavePersonalData(UserProfile profile)
+        public new ActionResult Profile(PesronalInfoViewModel model, string info)
         {
             if (!ModelState.IsValid)
-                return View("PersonalInfoForm");
+            {
+                var viewModel = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+                return View("Profile", viewModel);
+            }
 
-            if (Session["user"] == null)
-                return RedirectToAction("Login", "User");
+            using (var _context = new ApplicationDbContext())
+            {
+                SessionData currentUser = (SessionData)Session["user"];
 
-            SessionData sessionData = (SessionData)Session["user"];
 
-            //Create DB variable
-            var _context = new ApplicationDbContext();
+                if(info == "personal")
+                {
+                    var profile = _context.UserProfile.Single(p => p.Id == model.Profile.Id);
+                   
+                    profile.Name = model.Profile.Name;
+                    profile.ProfilePicture = model.Profile.ProfilePicture;
+                    profile.Address = model.Profile.Address;
+                    profile.ContactNumber = model.Profile.ContactNumber;
+                    profile.DateOfBirth = model.Profile.DateOfBirth;
+                    profile.Gender = model.Profile.Gender;
+                    profile.Location = model.Profile.Location;
+                }
 
-            var userInDb = _context.User.Include(p => p.Profile).Single(u => u.Id == sessionData.Id);
+                _context.SaveChanges();
 
-            userInDb.Profile = profile;
 
-            //Add User Profile data to DB
-            _context.SaveChanges();
+                var viewModel = GetProfileViewModel(_context, currentUser.Id);
 
-            return View();
+                return View("Profile", viewModel);
+            }
+        }
+
+        [NonAction]
+        private ProfileViewModel GetProfileViewModel(ApplicationDbContext _context, int id)
+        {
+            var userData = _context.User.Include(p => p.Profile).Single(u => u.Id == id);
+            var degreeTitles = _context.DegreeTitles.ToList();
+            var industries = _context.Industries.ToList();
+            var skillLevel = _context.SkillLevels.ToList();
+
+            ProfileViewModel viewModel = new ProfileViewModel
+            {
+                User = userData,
+                DegreeTitles = degreeTitles,
+                Industries = industries,
+                SkillLevels = skillLevel
+            };
+
+            return viewModel;
         }
     }
 }
