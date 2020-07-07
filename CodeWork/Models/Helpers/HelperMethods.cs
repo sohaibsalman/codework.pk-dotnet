@@ -24,13 +24,13 @@ namespace CodeWork.Models.Helpers
             if (user.Profile.Summary != null)
                 percent += 10;
 
-            if (user.Profile.Education != null)
+            if (user.Profile.Education.Count != 0)
                 percent += 20;
 
-            if (user.Profile.Experience != null)
+            if (user.Profile.Experience.Count != 0)
                 percent += 20;
 
-            if (user.Profile.Skills != null)
+            if (user.Profile.Skills.Count != 0)
                 percent += 15;
 
             return percent;
@@ -50,13 +50,13 @@ namespace CodeWork.Models.Helpers
             if (user.Profile.Summary == null)
                 list.Add("Professional Summary");
 
-            if (user.Profile.Education == null)
+            if (user.Profile.Education.Count == 0)
                 list.Add("Education");
 
-            if (user.Profile.Experience == null)
+            if (user.Profile.Experience.Count == 0)
                 list.Add("Job Experience");
 
-            if (user.Profile.Skills == null)
+            if (user.Profile.Skills.Count == 0)
                 list.Add("Skills");
 
             return list;
@@ -76,13 +76,13 @@ namespace CodeWork.Models.Helpers
             if (user.Profile.Summary != null)
                 list.Add("Professional Summary");
 
-            if (user.Profile.Education != null)
+            if (user.Profile.Education.Count != 0)
                 list.Add("Education");
 
-            if (user.Profile.Experience != null)
+            if (user.Profile.Experience.Count != 0)
                 list.Add("Job Experience");
 
-            if (user.Profile.Skills != null)
+            if (user.Profile.Skills.Count != 0)
                 list.Add("Skills");
 
             return list;

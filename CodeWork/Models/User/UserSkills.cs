@@ -16,5 +16,9 @@ namespace CodeWork.Models
         public string Name { get; set; }
 
         public SkillLevel SkillLevel { get; set; }
+
+        [Required]
+        [Display(Name = "Skill Level")]
+        public int SkillLevelId { get; set; }
     }
 }

@@ -108,3 +108,4 @@ D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.AddDataAnnotat
 D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.PopulateIndustriesTable.resources
 D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.PopulateSkillsLevelTable.resources
 D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.AddDataAnnotationsToSkills.resources
+D:\Development\C#\CodeWork\CodeWork\obj\Debug\CodeWork.Migrations.AddSkillLevelIdToUserSkills.resources

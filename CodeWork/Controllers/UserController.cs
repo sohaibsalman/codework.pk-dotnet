@@ -77,45 +77,166 @@ namespace CodeWork.Controllers
 
 
         [HttpPost]
-        public new ActionResult Profile(PesronalInfoViewModel model, string info)
+        public ActionResult UpdatePersonal(PesronalInfoViewModel model)
         {
+
             if (!ModelState.IsValid)
             {
-                var viewModel = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
-                return View("Profile", viewModel);
+                var vm = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+                return View("Profile", vm);
             }
 
             using (var _context = new ApplicationDbContext())
             {
-                SessionData currentUser = (SessionData)Session["user"];
 
+                var profile = _context.UserProfile.Single(p => p.Id == model.Profile.Id);
 
-                if(info == "personal")
-                {
-                    var profile = _context.UserProfile.Single(p => p.Id == model.Profile.Id);
-                   
-                    profile.Name = model.Profile.Name;
-                    profile.ProfilePicture = model.Profile.ProfilePicture;
-                    profile.Address = model.Profile.Address;
-                    profile.ContactNumber = model.Profile.ContactNumber;
-                    profile.DateOfBirth = model.Profile.DateOfBirth;
-                    profile.Gender = model.Profile.Gender;
-                    profile.Location = model.Profile.Location;
-                }
+                profile.Name = model.Profile.Name;
+                profile.ProfilePicture = model.Profile.ProfilePicture;
+                profile.Address = model.Profile.Address;
+                profile.ContactNumber = model.Profile.ContactNumber;
+                profile.DateOfBirth = model.Profile.DateOfBirth;
+                profile.Gender = model.Profile.Gender;
+                profile.Location = model.Profile.Location;
+
 
                 _context.SaveChanges();
-
-
-                var viewModel = GetProfileViewModel(_context, currentUser.Id);
-
-                return View("Profile", viewModel);
             }
+            var viewModel = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+            return View("Profile", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateSummary(SummaryViewModel model)
+        {
+           
+            if (!ModelState.IsValid)
+            {
+                var vm = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+                return View("Profile", vm);
+            }
+
+            using (var _context = new ApplicationDbContext())
+            {
+                //Get profile from Db
+                var profileInDb = _context.UserProfile.Single(p => p.Id == model.ProfileId);
+
+                //Update Summary
+                profileInDb.Summary = model.Summary;
+
+                //Save Changes
+                _context.SaveChanges();
+            }
+            var viewModel = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+            return View("Profile", viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateEducation(EducationInfoViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var vm = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+                return View("Profile", vm);
+            }
+
+            using(var _context = new ApplicationDbContext())
+            {
+                //Get User profile from DB
+                var profileInDb = _context.
+                    UserProfile.
+                    Include(e => e.Education).
+                    SingleOrDefault(p => p.Id == model.ProfileId);
+
+                //If there is no id, it means we have to add the education in db
+                if (model.Education.Id == 0)
+                    profileInDb.Education.Add(model.Education);
+
+                _context.SaveChanges();
+            }
+
+            var viewModel = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+            return View("Profile", viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateJob(JobInfoViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var vm = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+                return View("Profile", vm);
+            }
+
+            using(var _context = new ApplicationDbContext())
+            {
+                //Get user profile from Db
+                var profileInDb = _context.UserProfile.
+                    Include(j => j.Experience).
+                    SingleOrDefault(p => p.Id == model.ProfileId);
+
+                //Check if profile is empty
+                if (profileInDb == null)
+                    return HttpNotFound();
+
+                if (model.Experience.Id == 0)
+                    profileInDb.Experience.Add(model.Experience);
+
+                _context.SaveChanges();
+            }
+
+            var viewModel = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+            return View("Profile", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateSkills(SkillsInfoViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var vm = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+                return View("Profile", vm);
+            }
+
+
+            using(var _context = new ApplicationDbContext())
+            {
+
+                //Get User profile from Db
+                var profileInDb = _context.
+                    UserProfile.
+                    Include(s => s.Skills).
+                    SingleOrDefault(p => p.Id == model.ProfileId);
+
+                //Check if profile is null
+                if (profileInDb == null)
+                    return HttpNotFound();
+
+                //Profile is not null, check if the skill id is 0, it means that new skill will be added to db
+                if (model.Skill.Id == 0)
+                    profileInDb.Skills.Add(model.Skill);
+
+                _context.SaveChanges();
+            }
+
+            var viewModel = GetProfileViewModel(new ApplicationDbContext(), ((SessionData)Session["user"]).Id);
+            return View("Profile", viewModel);
         }
 
         [NonAction]
         private ProfileViewModel GetProfileViewModel(ApplicationDbContext _context, int id)
         {
-            var userData = _context.User.Include(p => p.Profile).Single(u => u.Id == id);
+            var userData = _context.User.
+                Include(p => p.Profile).
+                Include(e => e.Profile.Education).
+                Include(j => j.Profile.Experience).
+                Include(s => s.Profile.Skills).
+                Single(u => u.Id == id);
             var degreeTitles = _context.DegreeTitles.ToList();
             var industries = _context.Industries.ToList();
             var skillLevel = _context.SkillLevels.ToList();

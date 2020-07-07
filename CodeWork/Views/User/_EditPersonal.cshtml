@@ -2,7 +2,7 @@
 
     <div class="edit-content">
 
-        @using (Html.BeginForm("Profile", "User", routeValues: new { info = "personal"}))
+        @using (Html.BeginForm("UpdatePersonal", "User"))
         {
 
             @Html.HiddenFor(m => m.Profile.Id)

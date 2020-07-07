@@ -10,6 +10,9 @@ namespace CodeWork.Models
     {
         public DbSet<User> User { get; set; }
         public DbSet<UserProfile> UserProfile { get; set; }
+        public DbSet<UserEducation> UserEducations { get; set; }
+        public DbSet<UserJobExperience> UserJobExperiences { get; set; }
+        public DbSet<UserSkills> UserSkills { get; set; }
 
         public DbSet<DegreeTitle> DegreeTitles { get; set; }
         public DbSet<Industry> Industries { get; set; }

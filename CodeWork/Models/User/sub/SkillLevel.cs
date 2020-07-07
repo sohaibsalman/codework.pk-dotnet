@@ -8,8 +8,6 @@ namespace CodeWork.Models
 {
     public class SkillLevel
     {
-        [Required]
-        [Display(Name = "Skill Level")]
         public byte Id { get; set; }
 
         public string Name { get; set; }
