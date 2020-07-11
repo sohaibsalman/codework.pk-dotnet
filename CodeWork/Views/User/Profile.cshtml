@@ -32,14 +32,14 @@
                                         string profilePic = "";
                                         if (String.IsNullOrEmpty(Model.User.Profile.ProfilePicture))
                                         {
-                                            profilePic = "/Img/profile/default.png";
+                                            profilePic = "default.png";
                                         }
                                         else
                                         {
                                             profilePic = Model.User.Profile.ProfilePicture;
                                         }
                                     }
-                                    <img src="@profilePic" alt="user-dp" />
+                                    <img src="~/Img/profile/@profilePic" alt="user-dp" class="img-round"/>
                                 </div>
                                 <!--INFO-->
                                 <div class="col-md-8">
@@ -55,7 +55,9 @@
 
                         @Html.Partial("_EditPersonal", 
                                     new CodeWork.ViewModels.PesronalInfoViewModel 
-                                    { Email = Model.User.Email, Profile = Model.User.Profile})
+                                    { Email = Model.User.Email, 
+                                    Profile = Model.User.Profile, 
+                                    Username = Model.User.Username})
 
                     </div>
                 </div>
@@ -176,7 +178,9 @@
                                 {
                                     string current = "";
                                     if (item.IsCurrentlyWorking)
-                                        curent = "(Current)";
+                                    {
+                                        current = "(Current)";
+                                    }
                                     <div>
                                         <h6>@item.JobTitle</h6>
                                         <p>@item.Industry.Name</p>
@@ -258,7 +262,7 @@
                     <div class="completion-percentage">
                         @{
                             int percentage = CodeWork.Models.Helpers.HelperMethods.GetProfileCompletionPercent(Model.User);
-                            string headingColor = "text-succes";
+                            string headingColor = "text-success";
 
                             if (percentage < 50)
                             {

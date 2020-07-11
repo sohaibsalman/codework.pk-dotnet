@@ -10,6 +10,8 @@ namespace CodeWork.ViewModels
     {
         public string Email { get; set; }
 
+        public string Username { get; set; }
+
         public UserProfile Profile { get; set; }
     }
 }

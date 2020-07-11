@@ -4,6 +4,7 @@ using CodeWork.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web;
@@ -88,16 +89,39 @@ namespace CodeWork.Controllers
 
             using (var _context = new ApplicationDbContext())
             {
+                
+                var profileInDb = _context.UserProfile.Single(p => p.Id == model.Profile.Id);
 
-                var profile = _context.UserProfile.Single(p => p.Id == model.Profile.Id);
+                if(Request.Files["profile-pic"] != null)
+                {
+                    var file = Request.Files["profile-pic"];
 
-                profile.Name = model.Profile.Name;
-                profile.ProfilePicture = model.Profile.ProfilePicture;
-                profile.Address = model.Profile.Address;
-                profile.ContactNumber = model.Profile.ContactNumber;
-                profile.DateOfBirth = model.Profile.DateOfBirth;
-                profile.Gender = model.Profile.Gender;
-                profile.Location = model.Profile.Location;
+                    if(file.FileName != "")
+                    {
+                        string extension = System.IO.Path.GetExtension(file.FileName);
+
+                        //Generate unique name
+                        string uniqueName = model.Username + extension;
+
+                        //Get root path
+                        string rootPath = Server.MapPath("~/Img/Profile");
+
+                        string fileSavePath = Path.Combine(rootPath, uniqueName);
+
+                        //Save File
+                        file.SaveAs(fileSavePath);
+
+                        //Save profile pic name in db
+                        profileInDb.ProfilePicture = uniqueName;
+                    }
+                }
+
+                profileInDb.Name = model.Profile.Name;
+                profileInDb.Address = model.Profile.Address;
+                profileInDb.ContactNumber = model.Profile.ContactNumber;
+                profileInDb.DateOfBirth = model.Profile.DateOfBirth;
+                profileInDb.Gender = model.Profile.Gender;
+                profileInDb.Location = model.Profile.Location;
 
 
                 _context.SaveChanges();
