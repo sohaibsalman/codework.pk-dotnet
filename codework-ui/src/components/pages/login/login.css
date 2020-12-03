@@ -1,7 +1,16 @@
 .outer {
-  background-color: gainsboro;
   height: 100vh;
   position: relative;
+  background: url("../../../static/images/login/bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.layer {
+  height: 100vh;
+  position: relative;
+  background-color: rgba(220, 220, 220, 0.75);
 }
 
 .inner {
@@ -12,7 +21,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.048);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.233);
 }
 
 .form {

@@ -11,6 +11,7 @@ class Login extends Component {
     return (
       <React.Fragment>
         <div className="outer">
+          <div className="layer"></div>
           <div className="inner">
             <LoginForm />
           </div>
@@ -38,13 +39,13 @@ const Form = () => {
   return (
     <div className="form">
       <Typography variant="h6" className={util.mbHuge}>
-        CodeWork.pk
+        <strong>CodeWork.pk</strong>
       </Typography>
       <Typography variant="h5" className={util.txtCapitalize}>
         Intelligent Workplace for geeks
       </Typography>
       <Typography color="textSecondary" className={util.mtbTiny}>
-        Work Anywhere, Anytime
+        Work Anywhere, Anytime!
       </Typography>
       <form>
         <TextField
