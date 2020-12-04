@@ -56,14 +56,6 @@ const Form = () => {
           className={util.mtbTiny}
         />
         <TextField
-          label="Email"
-          type="email"
-          variant="outlined"
-          fullWidth
-          required
-          className={util.mtbTiny}
-        />
-        <TextField
           label="Password"
           type="password"
           variant="outlined"
@@ -78,8 +70,11 @@ const Form = () => {
           size="large"
           className={util.mtbTiny}
         >
-          Create Account
+          Login
         </Button>
+        <Typography>
+          Dont have an account? <a href="#">Sign Up</a>{" "}
+        </Typography>
       </form>
     </div>
   );
