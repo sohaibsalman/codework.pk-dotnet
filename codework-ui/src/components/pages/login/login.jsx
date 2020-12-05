@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Grid, TextField, Typography } from "@material-ui/core";
 
+import { login } from "../../../services/authService";
+
 import utilityStyles from "../../../styles/utilityStyles";
 
 import "./login.css";
@@ -58,8 +60,8 @@ const Form = () => {
       username: Yup.string().required("Username is required!"),
       password: Yup.string().required("Pasword is required!"),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      login("useraccount", values.username, values.password);
     },
   });
   return (
@@ -79,6 +81,7 @@ const Form = () => {
       <TextField
         id="password"
         label="Password"
+        type="password"
         className={util.mtbTiny}
         value={formik.values.password}
         onChange={formik.handleChange}
