@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 import { login } from "../../../services/authService";
 
@@ -51,6 +52,7 @@ const LoginForm = () => {
 
 const Form = () => {
   const util = utilityStyles();
+  const [error, setError] = useState(null);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -61,7 +63,13 @@ const Form = () => {
       password: Yup.string().required("Pasword is required!"),
     }),
     onSubmit: async (values) => {
-      login("useraccount", values.username, values.password);
+      try {
+        await login("useraccount", values.username, values.password);
+      } catch (ex) {
+        if (ex.response && ex.response.status === 400) {
+          setError(ex.response.data);
+        }
+      }
     },
   });
   return (
@@ -91,6 +99,7 @@ const Form = () => {
         variant="outlined"
         fullWidth
       />
+      {error && <Alert severity="error">{error}</Alert>}
       <Button
         variant="contained"
         color="primary"
