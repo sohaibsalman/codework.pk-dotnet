@@ -1,0 +1,16 @@
+.signup__outer {
+  height: 100vh;
+  position: relative;
+  background: url("../../../static/images/signup/bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.signup__img {
+  background-image: url("../../../static/images/signup/signup.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+}
