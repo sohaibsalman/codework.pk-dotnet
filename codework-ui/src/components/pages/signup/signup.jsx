@@ -2,60 +2,59 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Grid, TextField, Typography } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
 import { Link } from "react-router-dom";
-
-import { login } from "../../../services/authService";
 
 import utilityStyles from "../../../styles/utilityStyles";
 
-import "./login.css";
+import "./signup.css";
 
-const Login = () => {
+const Signup = () => {
   return (
     <React.Fragment>
-      <div className="login__outer">
+      <div className="signup__outer">
         <div className="layer"></div>
         <div className="inner">
-          <LoginForm />
+          <SignupForm />
         </div>
       </div>
     </React.Fragment>
   );
 };
 
-const LoginForm = () => {
+const SignupForm = () => {
   const util = utilityStyles();
   return (
-    <Grid container>
-      <Grid item md={5} xs={12}>
-        {/* Form Header */}
-        <div className="form">
-          <Typography variant="h6" className={util.mbHuge}>
-            <strong>CodeWork.pk</strong>
-          </Typography>
-          <Typography variant="h5" className={util.txtCapitalize}>
-            Intelligent Workplace for geeks
-          </Typography>
-          <Typography color="textSecondary" className={util.mtbTiny}>
-            Work Anywhere, Anytime!
-          </Typography>
-          {/* Form Body */}
-          <Form />
-        </div>
+    <React.Fragment>
+      <Grid container>
+        <Grid item md={7} xs={12}>
+          <div className="signup__img"></div>
+        </Grid>
+        <Grid item md={5} xs={12}>
+          {/* Form Header */}
+          <div className="form">
+            <Typography variant="h6" className={util.mbHuge}>
+              <strong>CodeWork.pk</strong>
+            </Typography>
+            <Typography variant="h5" className={util.txtCapitalize}>
+              Intelligent Workplace for geeks
+            </Typography>
+            <Typography color="textSecondary" className={util.mtbTiny}>
+              Work Anywhere, Anytime!
+            </Typography>
+            {/* Form Body */}
+            <Form />
+          </div>
+        </Grid>
       </Grid>
-      <Grid item md={7} xs={12}>
-        <div className="login__img"></div>
-      </Grid>
-    </Grid>
+    </React.Fragment>
   );
 };
 
 const Form = () => {
   const util = utilityStyles();
-  const [error, setError] = useState(null);
   const formik = useFormik({
     initialValues: {
+      email: "",
       username: "",
       password: "",
     },
@@ -63,18 +62,22 @@ const Form = () => {
       username: Yup.string().required("Username is required!"),
       password: Yup.string().required("Pasword is required!"),
     }),
-    onSubmit: async (values) => {
-      try {
-        await login("useraccount", values.username, values.password);
-      } catch (ex) {
-        if (ex.response && ex.response.status === 400) {
-          setError(ex.response.data);
-        }
-      }
-    },
+    onSubmit: async (values) => {},
   });
   return (
     <form onSubmit={formik.handleSubmit}>
+      <TextField
+        id="email"
+        label="Email"
+        className={util.mtbTiny}
+        value={formik.values.email}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        helperText={formik.touched.email ? formik.errors.email : ""}
+        error={formik.touched.email && Boolean(formik.errors.email)}
+        variant="outlined"
+        fullWidth
+      />
       <TextField
         id="username"
         label="Username"
@@ -100,7 +103,6 @@ const Form = () => {
         variant="outlined"
         fullWidth
       />
-      {error && <Alert severity="error">{error}</Alert>}
       <Button
         variant="contained"
         color="primary"
@@ -109,13 +111,13 @@ const Form = () => {
         className={util.mtbTiny}
         type="submit"
       >
-        Login
+        Create Account
       </Button>
       <Typography>
-        Dont have an account? <Link to="/signup">Sign Up</Link>
+        Already have an account? <Link to="/login">Login</Link>
       </Typography>
     </form>
   );
 };
 
-export default Login;
+export default Signup;

@@ -1,4 +1,4 @@
-.outer {
+.login__outer {
   height: 100vh;
   position: relative;
   background: url("../../../static/images/login/bg.jpg");
@@ -28,7 +28,7 @@
   padding: 60px 50px;
 }
 
-.img {
+.login__img {
   background-image: url("../../../static/images/login/coder.png");
   background-position: center;
   background-size: cover;
