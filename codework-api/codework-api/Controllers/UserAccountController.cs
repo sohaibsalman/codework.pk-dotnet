@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace codework_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UserAccountController : ControllerBase
     {
@@ -25,20 +25,20 @@ namespace codework_api.Controllers
         }
 
         [HttpPost("login")]
-        public Object Login()
+        public Object Login(LoginDTO login)
         {
-            string username = HttpContext.Request.Form["username"];
-            string password = HttpContext.Request.Form["password"];
-
             using (_context)
             {
-                var userInDb = _context.UserLogins.SingleOrDefault(x => x.Username == username);
-                if (userInDb.Password.Trim() == password.Trim())
+                var userInDb = _context.UserLogins.SingleOrDefault(x => x.Username == login.Username);
+
+                if (userInDb != null)
                 {
-                    return GetToken(userInDb.UserId);
+                    if (userInDb.Password.Trim() == login.Password.Trim())
+                        return GetToken(userInDb.UserId);
                 }
+                
+                return BadRequest("Invalid username or password.");
             }
-            return NotFound();
         }
 
         [NonAction]
@@ -62,5 +62,10 @@ namespace codework_api.Controllers
 
             return new { token = jwt_token };
         }
+    }
+    public class LoginDTO
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }
